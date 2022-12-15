@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.15;
 
+error KickStarter__NoEarnings();
+error NFTMarketPlace__WithdrawFailed();
+
 contract KickStarter {
     uint256 public totalProjects;
     uint256 public fundTimer;
@@ -36,5 +39,18 @@ contract KickStarter {
             false,
             block.timestamp
         );
+    }
+
+    function withdrawFund() external {
+        uint256 userEarnings = crowdEarning[msg.sender];
+        if (userEarnings <= 0) {
+            revert KickStarter__NoEarnings();
+        }
+        crowdEarning[msg.sender] = 0;
+        (bool success, ) = payable(msg.sender).call{value: userEarnings}("");
+        //require(success, "Failed to withdraw earnings!");
+        if (!success) {
+            revert KickStarter__WithdrawFailed();
+        }
     }
 }
