@@ -2,7 +2,7 @@
 pragma solidity ^0.8.15;
 
 error KickStarter__NoEarnings();
-error NFTMarketPlace__WithdrawFailed();
+error KickStarter__WithdrawFailed();
 
 contract KickStarter {
     uint256 public totalProjects;
@@ -17,9 +17,10 @@ contract KickStarter {
         uint256 timeCreated;
     }
 
+    Projects[] public projectsList;
+
     // Keeps track of projectId => data type Items
     mapping(uint256 => Projects) public projects;
-
     mapping(address => uint256) public crowdEarning;
 
     constructor() {
@@ -40,6 +41,8 @@ contract KickStarter {
             block.timestamp
         );
     }
+
+    function fundProject(uint256 _projectId, uint256 _fundAmount) external {}
 
     function withdrawFund() external {
         uint256 userEarnings = crowdEarning[msg.sender];
