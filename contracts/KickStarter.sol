@@ -6,15 +6,16 @@ error KickStarter__WithdrawFailed();
 
 contract KickStarter {
     uint256 public totalProjects;
-    uint256 public fundTimer;
 
     struct Projects {
+        address payable creator;
         string projectName;
         uint256 projectId;
         uint256 fundGoal;
-        address payable creator;
-        bool finished;
-        uint256 timeCreated;
+        uint256 deadline;
+        uint256 fundCollected;
+        address[] donators;
+        uint256[] donations;
     }
 
     Projects[] public projectsList;
@@ -56,4 +57,8 @@ contract KickStarter {
             revert KickStarter__WithdrawFailed();
         }
     }
+
+    function getDonators() {}
+
+    function getAllProjects() {}
 }
