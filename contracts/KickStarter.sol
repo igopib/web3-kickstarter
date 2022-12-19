@@ -60,9 +60,11 @@ contract KickStarter {
         project.donators.push(msg.sender);
         project.donations.push(amount);
 
-        creatorEarning[project.creator] =
-            creatorEarning[project.creator] +
-            amount;
+        (bool success, ) = payable(project.creator).call{value: amount}("");
+
+        if (success) {
+            project.fundCollected = project.fundCollected + amount;
+        }
     }
 
     function getDonators(
