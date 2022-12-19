@@ -22,9 +22,8 @@ contract KickStarter {
 
     // Keeps track of projectId => data type Items
     mapping(uint256 => Projects) public projects;
-    mapping(address => uint256) public creatorEarning;
 
-
+    //mapping(address => uint256) public creatorEarning;
 
     function createProject(
         address _creator,
@@ -53,9 +52,7 @@ contract KickStarter {
         return totalProjects - 1;
     }
 
-    function fundProject(
-        uint256 _projectId,
-    ) public payable {
+    function fundProject(uint256 _projectId) public payable {
         uint256 amount = msg.value;
 
         Projects storage project = projects[_projectId];
@@ -63,23 +60,26 @@ contract KickStarter {
         project.donators.push(msg.sender);
         project.donations.push(amount);
 
-        creatorEarning[project.creator] = creatorEarning[project.creator] + amount;
+        creatorEarning[project.creator] =
+            creatorEarning[project.creator] +
+            amount;
     }
 
-    // function withdrawFund() external {
-    //     uint256 userEarnings = crowdEarning[msg.sender];
-    //     if (userEarnings <= 0) {
-    //         revert KickStarter__NoEarnings();
-    //     }
-    //     crowdEarning[msg.sender] = 0;
-    //     (bool success, ) = payable(msg.sender).call{value: userEarnings}("");
-    //     //require(success, "Failed to withdraw earnings!");
-    //     if (!success) {
-    //         revert KickStarter__WithdrawFailed();
-    //     }
-    // }
+    function getDonators(
+        uint256 _projectId
+    ) public view returns (address[] memory, uint256[] memory) {
+        return (projects[_projectId].donators, projects[_projectId].donations);
+    }
 
-    function getDonators() {}
+    function getAllProjects() public view returns (Projects[] memory) {
+        Projects[] memory allProjects = new Projects[](totalProjects);
 
-    function getAllProjects() {}
+        for (uint i = 0; i < totalProjects; i++) {
+            Projects storage item = projects[i];
+
+            allProjects[i] = item;
+        }
+
+        return allProjects;
+    }
 }
