@@ -1,13 +1,13 @@
-# Sample Hardhat Project
+# Web3 Crowdfund App
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+Built using Nextjs and Solidity.
 
-Try running some of the following tasks:
+# Smart Contract Functions
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
+1. createProject - Takes various parameters and saves the data in a struct ( Projects ) and saves it in an array.
+
+2. fundProject - Takes \_projectId as parameter and takes Eth amount to fund a project with its ID.
+
+3. getDonators - Takes \_projectId as parameter and returns all the addresses that donated to that project.
+
+4. getAllProjects - Returns all the projects that were created.
