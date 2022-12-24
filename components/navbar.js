@@ -1,5 +1,5 @@
 import Link from "next/link"
-import react from "react"
+import react, { useState } from "react"
 import { ethers } from "ethers"
 
 export default function NavBar({ web3handler, account }) {
