@@ -1,10 +1,20 @@
 import Link from "next/link"
-import react, { useState } from "react"
+import { useRouter } from 'next/router';
+import react, { useState} from "react"
 import { ethers } from "ethers"
 
 export default function NavBar({ web3handler, account }) {
+  const router = useRouter();
+
+  function handleClick() {
+    router.push('/createproject');
+  }
+
   return (
     <div>
+      <div>
+      <button onClick={handleClick}>Create Project</button>
+      </div>
       {account ? (
         <Link
           href={"https://etherscan.io/address/${account}"}

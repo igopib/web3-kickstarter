@@ -1,12 +1,14 @@
 import "../styles/globals.css"
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import react from "react"
 import { ethers } from "ethers"
 import NavBar from "../components/navbar"
 import SideBar from "../components/sidebar"
+import CreateProject from "./createproject"
 
 function MyApp({ Component, pageProps }) {
   const [account, setAccount] = useState(null)
+  const isConnected = useMemo(() => Boolean(accounts[0]), [accounts])
 
   // Metamask connect
   const web3handler = async () => {
@@ -23,9 +25,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <div className="relative sm:-8 p-4 bg-[#1313a] min-h-screen flex flex-row">
-      <div className="sm:flex hidden mr-10 relative">
-        <SideBar />
-      </div>
+      <div className="sm:flex hidden mr-10 relative"></div>
       <div className="flex-1 max sm:w-full max-w-[1280px] mx-auto sm:pr-5">
         <Component {...pageProps} />
         <NavBar web3handler={web3handler} account={account} />
